@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios'
+import $ from 'jquery'
 
 class App extends React.Component{
 
@@ -43,24 +43,16 @@ class App extends React.Component{
 
     
 
-      axios({
-        method: 'post',
-        url: 'http://localhost/react_php/src/react_php.php',
-        headers: {
-          'content-type': 'application/json'
-        },
-        data: this.state
-          })
-          .then(result => {
-              console.log(result.data)
-              this.setState({
-                  dataSent: result.data.sent,
-              })
-              console.log(this.state)
-          })
-          .catch(error => this.setState({
-              error: error.message
-    }));
+      $.post('http://localhost/react_php/src/react_php.php',
+          {
+            nom:$('#nom').val(),
+            ville:$('#ville').val(),
+            email:$('#email').val()
+          },
+          function(response) {
+            document.querySelector('p').innerText=response;
+          }
+      )
 
   }
 
